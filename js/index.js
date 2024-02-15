@@ -123,7 +123,7 @@ var drop = function(info){var o = {
       this.html.dropDisplay.innerHTML = ''; 
       this.html.dropDisplay.appendChild(parentHTML)
    },
-   renderOptions: function(){  
+   renderOptions: function(){
       var that = this;
       var parentHTML = $.template('<div></div>')
       this.options.forEach(function(option, index){
@@ -160,21 +160,24 @@ var drop = function(info){var o = {
          if(select.index == index && select.removed == false) check = true
       })
       return check
-   }
+   },
+	refresh: function() {
+		this.html.options = $.get(info.selector + ' option');
+		this.load();
+		this.render();
+	}
 }; o.init(); return o;}
 
 
-//Set up some data
-var options = [
-   { html: 'cats', value: 'cats' },
-   { html: 'fish', value: 'fish' },
-   { html: 'squids', value: 'squids' },
-   { html: 'cats', value: 'whales' },
-   { html: 'cats', value: 'bikes' },
-];
-
 var myDrop = new drop({
-   selector:  '#myMulti',
-   preselected: [0, 2]
+   selector:  '#myMulti'
 });
- myDrop.toggle();
+
+
+ function addOpt() {
+	let opt = document.createElement("option");
+	let txt = document.createTextNode("option");
+	opt.appendChild(txt);
+	document.getElementById("myMulti").appendChild(opt);
+	myDrop.refresh();
+ }
